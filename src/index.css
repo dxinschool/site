@@ -1021,17 +1021,28 @@ a {
 }
 
 .weather-forecast {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  display: flex;
   gap: 8px;
   margin-bottom: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 4px;
+}
+
+.weather-day {
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  width: 110px;
+}
+
+@media (max-width: 640px) {
+  .weather-day {
+    width: 100px;
+  }
 }
 
 @media (max-width: 800px) {
-  .weather-forecast {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
   .weather-current-emoji {
     font-size: 38px;
   }
@@ -1042,10 +1053,6 @@ a {
 }
 
 @media (max-width: 640px) {
-  .weather-forecast {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
   .weather-current-emoji {
     font-size: 32px;
   }

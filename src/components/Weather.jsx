@@ -80,6 +80,7 @@ export default function Weather() {
             {data.daily.map((day, i) => (
               <div
                 key={day.date}
+                className="weather-day"
                 style={{
                   textAlign: "center",
                   padding: "8px 4px",
