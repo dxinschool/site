@@ -34,7 +34,6 @@ export default function Card({
       id={id}
       className="card"
       style={{
-        ...extraStyle,
         gridColumn: spanMap[span] || spanMap[6],
         background: `${paperNoise}, linear-gradient(165deg, rgba(255,255,250,0.92), rgba(235, 240, 242, 0.88))`,
         border: "1px solid var(--border)",
@@ -44,6 +43,7 @@ export default function Card({
         transition: "transform 0.2s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease",
         position: "relative",
         minHeight: heightMap[size] || heightMap.md,
+        ...extraStyle,
       }}
     >
       {children}
