@@ -185,7 +185,7 @@ export default function SpotifyNowPlaying() {
               style={{
                 flex: 1,
                 minWidth: 0,
-                maxHeight: 148,
+                height: 148,
                 overflowY: "auto",
                 scrollBehavior: "smooth",
                 padding: "2px 0",
