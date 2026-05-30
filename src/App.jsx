@@ -109,7 +109,7 @@ export default function App() {
             />
           </Card>
 
-          <Card span={6} size="sm">
+          <Card id="spotify" span={6} size="sm" style={{ overflowAnchor: "none" }}>
             <SpotifyNowPlaying />
           </Card>
           <Card span={6} size="sm" style={{ transform: "rotate(1.2deg)" }} />

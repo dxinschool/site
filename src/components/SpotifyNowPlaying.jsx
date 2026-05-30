@@ -35,8 +35,10 @@ export default function SpotifyNowPlaying() {
 
   useEffect(() => {
     if (scrollRef.current && currentIndex >= 0) {
-      const child = scrollRef.current.children[currentIndex]
-      child?.scrollIntoView({ block: "center", behavior: "smooth" })
+      const el = scrollRef.current.children[currentIndex]
+      if (el) {
+        el.scrollIntoView({ block: "center", behavior: "smooth" })
+      }
     }
   }, [currentIndex])
 
@@ -186,7 +188,7 @@ export default function SpotifyNowPlaying() {
                 flex: 1,
                 minWidth: 0,
                 height: 148,
-                overflowY: "auto",
+                overflowY: "scroll",
                 scrollBehavior: "smooth",
                 padding: "2px 0",
               }}
