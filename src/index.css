@@ -849,3 +849,208 @@ a {
   letter-spacing: 0.5px;
   line-height: 1.3;
 }
+
+/* ── Spotify Responsive ── */
+
+.spotify-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.spotify-row--nolyrics {
+  align-items: center;
+  gap: 20px;
+  padding: 4px 0;
+}
+
+.spotify-album-col {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.spotify-album-link {
+  display: block;
+  position: relative;
+  border-radius: 8px;
+}
+
+.spotify-album-img {
+  border-radius: 8px;
+  display: block;
+  width: 140px;
+  height: 140px;
+}
+
+.spotify-song-info {
+  text-align: center;
+  min-width: 0;
+  width: 140px;
+}
+
+.spotify-song-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.spotify-song-artist {
+  font-size: 22px;
+  color: var(--muted);
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.spotify-nolyrics-info {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+}
+
+.spotify-nolyrics-song {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.spotify-nolyrics-artist {
+  font-size: 22px;
+  color: var(--muted);
+  line-height: 1.3;
+}
+
+.spotify-nowplaying-tag {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--accent-a);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.spotify-lyrics {
+  flex: 1;
+  min-width: 0;
+  height: 148px;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  padding: 2px 0;
+}
+
+@media (max-width: 800px) {
+  .spotify-row--nolyrics .spotify-album-img {
+    width: 110px;
+    height: 110px;
+  }
+
+  .spotify-album-img {
+    width: 120px;
+    height: 120px;
+  }
+
+  .spotify-song-info {
+    width: 120px;
+  }
+}
+
+@media (max-width: 640px) {
+  .spotify-row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .spotify-row--nolyrics {
+    flex-direction: row;
+  }
+
+  .spotify-lyrics {
+    width: 100%;
+    height: 120px;
+  }
+
+  .spotify-album-img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .spotify-song-info {
+    width: 100px;
+  }
+}
+
+/* ── Weather Responsive ── */
+
+.weather-current {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.weather-current-emoji {
+  font-size: 48px;
+}
+
+.weather-current-temp {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.weather-current-humidity {
+  font-size: 22px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.weather-forecast {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+@media (max-width: 800px) {
+  .weather-forecast {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .weather-current-emoji {
+    font-size: 38px;
+  }
+
+  .weather-current-temp {
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 640px) {
+  .weather-forecast {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .weather-current-emoji {
+    font-size: 32px;
+  }
+
+  .weather-current-temp {
+    font-size: 26px;
+  }
+}

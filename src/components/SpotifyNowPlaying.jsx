@@ -64,113 +64,40 @@ export default function SpotifyNowPlaying() {
       {spotify && (() => {
         const noLyrics = !lyricsLoading && lines.length === 0
         return (
-          <div style={{
-            display: "flex",
-            gap: noLyrics ? 20 : 16,
-            alignItems: noLyrics ? "center" : "flex-start",
-            padding: noLyrics ? "4px 0" : 0
-          }}>
-            <div
-              style={{
-                flexShrink: 0,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                gap: 8,
-              }}
-            >
+          <div className={`spotify-row ${noLyrics ? "spotify-row--nolyrics" : ""}`}>
+            <div className="spotify-album-col">
               <a
                 href={`https://open.spotify.com/track/${spotify.track_id}`}
                 target="_blank"
                 rel="noopener noreferrer"
+                className="spotify-album-link"
                 style={{
-                  display: "block",
-                  position: "relative",
                   boxShadow: noLyrics ? "0 8px 24px rgba(0,0,0,0.15)" : "none",
-                  borderRadius: 8,
                 }}
               >
                 <img
                   src={spotify.album_art_url}
                   alt={spotify.album}
+                  className="spotify-album-img"
                   width={noLyrics ? 110 : 140}
                   height={noLyrics ? 110 : 140}
-                  style={{ borderRadius: 8, display: "block" }}
                 />
               </a>
               
               {!noLyrics && (
-                <div style={{ textAlign: "center", minWidth: 0, width: 140 }}>
-                  <div
-                    style={{
-                      fontSize: 22,
-                      fontWeight: 700,
-                      color: "var(--text)",
-                      lineHeight: 1.2,
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                    }}
-                  >
-                    {spotify.song}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: 22,
-                      color: "var(--muted)",
-                      lineHeight: 1.3,
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                    }}
-                  >
-                    {spotify.artist}
-                  </div>
+                <div className="spotify-song-info">
+                  <div className="spotify-song-title">{spotify.song}</div>
+                  <div className="spotify-song-artist">{spotify.artist}</div>
                 </div>
               )}
             </div>
 
             {noLyrics && (
-              <div style={{ 
-                flex: 1, 
-                minWidth: 0, 
-                textAlign: "left",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                gap: 4
-              }}>
-                <div
-                  style={{
-                    fontSize: 16,
-                    fontWeight: 700,
-                    color: "var(--text)",
-                    lineHeight: 1.2,
-                  }}
-                >
-                  {spotify.song}
-                </div>
-                <div
-                  style={{
-                    fontSize: 22,
-                    color: "var(--muted)",
-                    lineHeight: 1.3,
-                  }}
-                >
-                  by {spotify.artist}
-                </div>
+              <div className="spotify-nolyrics-info">
+                <div className="spotify-nolyrics-song">{spotify.song}</div>
+                <div className="spotify-nolyrics-artist">by {spotify.artist}</div>
                 
-                <div style={{ 
-                  marginTop: 8, 
-                  display: "flex", 
-                  alignItems: "center", 
-                  gap: 6,
-                  color: "var(--accent-a)",
-                  fontSize: 22,
-                  fontWeight: 600,
-                  letterSpacing: "0.5px",
-                  textTransform: "uppercase"
-                }}>
+                <div className="spotify-nowplaying-tag">
                   <div className="spotify-bars">
                     <span className="bar"></span>
                     <span className="bar"></span>
@@ -184,14 +111,7 @@ export default function SpotifyNowPlaying() {
             {(lyricsLoading || lines.length > 0) && (
             <div
               ref={scrollRef}
-              style={{
-                flex: 1,
-                minWidth: 0,
-                height: 148,
-                overflowY: "scroll",
-                scrollBehavior: "smooth",
-                padding: "2px 0",
-              }}
+              className="spotify-lyrics"
             >
               {lyricsLoading ? (
                 <div

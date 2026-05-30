@@ -49,24 +49,13 @@ export default function Weather() {
             </div>
           )}
 
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 16,
-              marginBottom: 20,
-            }}
-          >
-            <span style={{ fontSize: 48 }}>
+          <div className="weather-current">
+            <span className="weather-current-emoji">
               {data.current.temp !== null ? (data.current.temp >= 33 ? "🥵" : data.current.temp >= 28 ? "☀️" : data.current.temp >= 20 ? "🌤️" : data.current.temp >= 12 ? "🌥️" : "❄️") : "🌤️"}
             </span>
             <div>
-              <div style={{ fontSize: 36, fontWeight: 700, lineHeight: 1 }}>
-                {data.current.temp !== null ? `${data.current.temp}°` : "--°"}
-              </div>
-              <div style={{ fontSize: 22, color: "var(--muted)", marginTop: 2 }}>
-                humidity: {data.current.humidity !== null ? `${data.current.humidity}%` : "--"}
-              </div>
+              <div className="weather-current-temp">{data.current.temp !== null ? `${data.current.temp}°` : "--°"}</div>
+              <div className="weather-current-humidity">humidity: {data.current.humidity !== null ? `${data.current.humidity}%` : "--"}</div>
             </div>
           </div>
 
@@ -87,14 +76,7 @@ export default function Weather() {
             </div>
           )}
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(5, 1fr)",
-              gap: 8,
-              marginBottom: 12,
-            }}
-          >
+          <div className="weather-forecast">
             {data.daily.map((day, i) => (
               <div
                 key={day.date}
