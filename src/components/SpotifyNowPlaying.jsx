@@ -34,12 +34,12 @@ export default function SpotifyNowPlaying() {
   const scrollRef = useRef(null)
 
   useEffect(() => {
-    if (scrollRef.current && currentIndex >= 0) {
-      const el = scrollRef.current.children[currentIndex]
-      if (el) {
-        el.scrollIntoView({ block: "center", behavior: "smooth" })
-      }
-    }
+    const c = scrollRef.current
+    if (!c || currentIndex < 0) return
+    const el = c.children[currentIndex]
+    if (!el) return
+    const top = el.offsetTop - c.clientHeight / 2 + el.clientHeight / 2
+    c.scrollTo({ top, behavior: "smooth" })
   }, [currentIndex])
 
   return (
