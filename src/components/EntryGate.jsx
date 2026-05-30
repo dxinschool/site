@@ -1,11 +1,16 @@
 import { useState } from "react"
 
-export default function EntryGate() {
-  const [hidden, setHidden] = useState(false)
+export default function EntryGate({ onEnter }) {
+  const [leaving, setLeaving] = useState(false)
+
+  function handleClick() {
+    setLeaving(true)
+    setTimeout(onEnter, 300)
+  }
 
   return (
     <div
-      className="entry-gate"
+      className={leaving ? "entry-gate hide" : "entry-gate"}
       style={{
         position: "fixed",
         inset: 0,
@@ -14,12 +19,9 @@ export default function EntryGate() {
         display: "grid",
         placeItems: "center",
         zIndex: 50,
-        transition: "opacity 0.35s ease, visibility 0.35s ease",
-        opacity: hidden ? 0 : 1,
-        visibility: hidden ? "hidden" : "visible",
         cursor: "pointer",
       }}
-      onClick={() => setHidden(true)}
+      onClick={handleClick}
     >
       <div
         style={{
@@ -45,7 +47,7 @@ export default function EntryGate() {
         <p
           style={{
             color: "var(--muted)",
-            fontSize: 14,
+            fontSize: 22,
             margin: 0,
           }}
         >

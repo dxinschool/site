@@ -27,6 +27,8 @@ export default function Card({
     xl: "260px",
   }
 
+  const paperNoise = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/></filter><rect width='200' height='200' filter='url(%23n)' opacity='0.08'/></svg>")`
+
   return (
     <section
       id={id}
@@ -34,32 +36,16 @@ export default function Card({
       style={{
         ...extraStyle,
         gridColumn: spanMap[span] || spanMap[6],
-        background:
-          "linear-gradient(160deg, rgba(255,255,255,0.85), var(--card))",
+        background: `${paperNoise}, linear-gradient(165deg, rgba(255,255,250,0.92), rgba(235, 240, 242, 0.88))`,
         border: "1px solid var(--border)",
-        borderRadius: "4px",
+        borderRadius: "3px",
         padding: size === "xs" ? 14 : size === "sm" || size === "md" ? 16 : size === "lg" ? 22 : 26,
-        boxShadow: "var(--shadow)",
-        backdropFilter: "var(--blur)",
-        transition: "transform 0.2s ease, background 0.2s ease, border-color 0.2s ease",
+        boxShadow: "0 2px 4px rgba(0,0,0,0.06), 0 6px 16px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.6)",
+        transition: "transform 0.2s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease",
         position: "relative",
         minHeight: heightMap[size] || heightMap.md,
       }}
     >
-      <div
-        style={{
-          content: "",
-          position: "absolute",
-          top: 0,
-          right: 0,
-          width: 0,
-          height: 0,
-          borderStyle: "solid",
-          borderWidth: "0 0 20px 20px",
-          borderColor: "transparent transparent rgba(47, 127, 176, 0.35) transparent",
-          pointerEvents: "none",
-        }}
-      />
       {children}
     </section>
   )

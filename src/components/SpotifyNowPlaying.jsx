@@ -101,7 +101,7 @@ export default function SpotifyNowPlaying() {
                 <div style={{ textAlign: "center", minWidth: 0, width: 140 }}>
                   <div
                     style={{
-                      fontSize: 13,
+                      fontSize: 22,
                       fontWeight: 700,
                       color: "var(--text)",
                       lineHeight: 1.2,
@@ -114,7 +114,7 @@ export default function SpotifyNowPlaying() {
                   </div>
                   <div
                     style={{
-                      fontSize: 11,
+                      fontSize: 22,
                       color: "var(--muted)",
                       lineHeight: 1.3,
                       whiteSpace: "nowrap",
@@ -150,7 +150,7 @@ export default function SpotifyNowPlaying() {
                 </div>
                 <div
                   style={{
-                    fontSize: 13,
+                    fontSize: 22,
                     color: "var(--muted)",
                     lineHeight: 1.3,
                   }}
@@ -164,7 +164,7 @@ export default function SpotifyNowPlaying() {
                   alignItems: "center", 
                   gap: 6,
                   color: "var(--accent-a)",
-                  fontSize: 11,
+                  fontSize: 22,
                   fontWeight: 600,
                   letterSpacing: "0.5px",
                   textTransform: "uppercase"
@@ -199,7 +199,7 @@ export default function SpotifyNowPlaying() {
                     justifyContent: "center",
                     height: "100%",
                     minHeight: 60,
-                    fontSize: 12,
+                    fontSize: 22,
                     color: "var(--muted)",
                   }}
                 >
@@ -210,7 +210,7 @@ export default function SpotifyNowPlaying() {
                   <div
                     key={i}
                     style={{
-                      fontSize: 13,
+                      fontSize: 22,
                       lineHeight: 1.7,
                       color:
                         i === currentIndex

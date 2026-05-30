@@ -1,80 +1,88 @@
-import { useState } from "react"
+import { useState, useMemo, useCallback, useEffect } from "react"
 
 const images = [
-  { id: 1, src: "https://picsum.photos/seed/1/600/600", desc: "a random photo" },
-  { id: 2, src: "https://picsum.photos/seed/2/600/600", desc: "another photo" },
-  { id: 3, src: "https://picsum.photos/seed/3/600/600", desc: "some scenery" },
-  { id: 4, src: "https://picsum.photos/seed/4/600/600", desc: "captured moment" },
-  { id: 5, src: "https://picsum.photos/seed/5/600/600", desc: "nice view" },
-  { id: 6, src: "https://picsum.photos/seed/6/600/600", desc: "cityscape" },
-  { id: 7, src: "https://picsum.photos/seed/7/600/600", desc: "nature" },
-  { id: 8, src: "https://picsum.photos/seed/8/600/600", desc: "architecture" },
-  { id: 9, src: "https://picsum.photos/seed/9/600/600", desc: "portrait" },
+  { id: 1, src: "https://picsum.photos/seed/cheki1/600/600", desc: "a random photo" },
+  { id: 2, src: "https://picsum.photos/seed/cheki2/600/600", desc: "another photo" },
+  { id: 3, src: "https://picsum.photos/seed/cheki3/600/600", desc: "some scenery" },
+  { id: 4, src: "https://picsum.photos/seed/cheki4/600/600", desc: "captured moment" },
+  { id: 5, src: "https://picsum.photos/seed/cheki5/600/600", desc: "nice view" },
+  { id: 6, src: "https://picsum.photos/seed/cheki6/600/600", desc: "cityscape" },
+  { id: 7, src: "https://picsum.photos/seed/cheki7/600/600", desc: "nature" },
+  { id: 8, src: "https://picsum.photos/seed/cheki8/600/600", desc: "architecture" },
+  { id: 9, src: "https://picsum.photos/seed/cheki9/600/600", desc: "portrait" },
 ]
+
+const rotations = [-2.5, 1.8, -1.2, 3, -0.5, 2.2, -3.5, 0.8, -1.8]
 
 export default function Gallery() {
   const [selected, setSelected] = useState(null)
+  const [closing, setClosing] = useState(false)
+
+  const open = useCallback((img) => setSelected(img), [])
+
+  const close = useCallback(() => {
+    setClosing(true)
+  }, [])
+
+  useEffect(() => {
+    if (!closing) return
+    const id = setTimeout(() => {
+      setSelected(null)
+      setClosing(false)
+    }, 250)
+    return () => clearTimeout(id)
+  }, [closing])
+
+  const shuffled = useMemo(() => {
+    const arr = images.map((img, i) => ({ ...img, rotate: rotations[i % rotations.length] }))
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]]
+    }
+    return arr
+  }, [])
 
   return (
     <div className="page">
-
-      <main style={{ maxWidth: 900, margin: "60px auto", padding: "0 20px" }}>
+      <main
+        style={{
+          maxWidth: 1000,
+          margin: "40px auto",
+          padding: "20px",
+        }}
+      >
         <h1 style={{ fontSize: 28, fontWeight: 700, marginBottom: 8 }}>gallery</h1>
         <p style={{ color: "var(--muted)", marginBottom: 32 }}>photos and captures</p>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
-            gap: 12,
-          }}
-        >
-          {images.map((img) => (
+        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 16 }}>
+          {shuffled.map((img, i) => (
             <div
               key={img.id}
-              onClick={() => setSelected(img)}
+              className="polaroid"
+              onClick={() => open(img)}
               style={{
-                borderRadius: 12,
-                overflow: "hidden",
-                background: "var(--card-bg)",
-                border: "1px solid var(--border)",
-                cursor: "pointer",
-                transition: "border-color 0.2s",
+                "--rotate": `${img.rotate}deg`,
+                zIndex: i,
               }}
-              onMouseEnter={(e) => e.currentTarget.style.borderColor = "var(--accent-a)"}
-              onMouseLeave={(e) => e.currentTarget.style.borderColor = "var(--border)"}
             >
-              <div style={{ aspectRatio: "1/1", overflow: "hidden" }}>
-                <img
-                  src={img.src}
-                  alt={img.desc}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    display: "block",
-                    transition: "transform 0.3s",
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.05)"}
-                  onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
-                />
+              <div className="polaroid-img-wrap">
+                <img src={img.src} alt={img.desc} />
               </div>
-              <div style={{ padding: "10px 12px 12px", fontSize: 13, color: "var(--muted)" }}>
-                {img.desc}
-              </div>
+              <div className="polaroid-caption">{img.desc}</div>
             </div>
           ))}
         </div>
       </main>
 
-      {selected && (
+      {(selected || closing) && (
         <div
-          onClick={() => setSelected(null)}
+          onClick={close}
+          className={closing ? "modal-overlay-out" : "modal-overlay-in"}
           style={{
             position: "fixed",
             inset: 0,
             zIndex: 999,
-            background: "rgba(0,0,0,0.8)",
+            background: "rgba(0,0,0,0.85)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -84,25 +92,38 @@ export default function Gallery() {
         >
           <div
             onClick={(e) => e.stopPropagation()}
+            className={closing ? "modal-content-out" : "modal-content-in"}
             style={{
-              maxWidth: "90vw",
-              maxHeight: "90vh",
-              borderRadius: 12,
-              overflow: "hidden",
-              background: "var(--card-bg)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              padding: "14px 14px 18px",
+              background: "#faf8f0",
+              borderRadius: 4,
+              boxShadow: "4px 8px 32px rgba(0,0,0,0.4)",
+              maxWidth: "80vw",
             }}
           >
             <img
-              src={selected.src}
-              alt={selected.desc}
+              src={selected?.src}
+              alt={selected?.desc}
               style={{
-                maxWidth: "100%",
-                maxHeight: "80vh",
+                maxWidth: "70vw",
+                maxHeight: "70vh",
                 display: "block",
+                background: "#e8e4d8",
               }}
             />
-            <div style={{ padding: "12px 16px", fontSize: 14, color: "var(--text)" }}>
-              {selected.desc}
+            <div
+              style={{
+                marginTop: 12,
+                fontSize: 22,
+                color: "#555",
+                fontFamily: '"Caveat", sans-serif',
+                letterSpacing: 0.5,
+              }}
+            >
+              {selected?.desc}
             </div>
           </div>
         </div>

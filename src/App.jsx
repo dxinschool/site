@@ -14,15 +14,17 @@ import Gallery from "./pages/Gallery"
 
 export default function App() {
   const [page, setPage] = useState("home")
+  const [entered, setEntered] = useState(false)
 
   return (
     <>
+      {!entered && <EntryGate onEnter={() => setEntered(true)} />}
       {page !== "home" && <Nav page={page} setPage={setPage} />}
+      <div key={page} className="page-fade">
       {page === "blog" ? <Blog setPage={setPage} />
       : page === "gallery" ? <Gallery setPage={setPage} />
       : (
       <>
-        <EntryGate />
         <div className="page">
           <Hero setPage={setPage} />
         <Ticker />
@@ -58,52 +60,53 @@ export default function App() {
             </ul>
           </Card>
 
-          <Card span={4} size="xs">
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", position: "relative", zIndex: 1 }}>
-              <div>
-                <h2 className="card-title">discord</h2>
-                <DiscordStatus />
-                <a 
-                  href="https://discord.com/users/511031197455876128" 
-                  target="_blank" 
-                  rel="noreferrer"
-                  className="card-button"
-                >
-                  add me
-                </a>
-              </div>
+          <Card span={4} size="xs" style={{ position: "relative" }}>
+            <div style={{ position: "relative", zIndex: 1 }}>
+              <h2 className="card-title">discord</h2>
+              <DiscordStatus />
               <div style={{ position: "absolute", right: -5, top: 10, zIndex: -1, opacity: 0.85 }}>
-                <img 
-                  src="https://www.svgrepo.com/show/353655/discord-icon.svg" 
-                  alt="Discord Logo" 
-                  style={{ width: 100, height: "auto" }}
-                />
+                <img src="https://www.svgrepo.com/show/353655/discord-icon.svg" alt="Discord Logo" style={{ width: 100, height: "auto" }} />
               </div>
             </div>
+            <a
+              href="https://discord.com/users/511031197455876128"
+              target="_blank"
+              rel="noreferrer"
+              style={{ position: "absolute", inset: 0, zIndex: 2, cursor: "pointer" }}
+              aria-label="Discord profile"
+            />
           </Card>
 
-          <Card span={4} size="xs">
+          <Card span={4} size="xs" style={{ position: "relative" }}>
             <div style={{ position: "relative", zIndex: 1 }}>
               <h2 className="card-title">email</h2>
-              <a href="mailto:sz@to.hkjc.uk" className="card-text" style={{ color: "var(--accent-a)", textDecoration: "none" }}>
-                sz@to.hkjc.uk
-              </a>
-              <div style={{ position: "absolute", right: -5, top: -5, zIndex: -1, opacity: 0.5 }}>
-                <img src="https://www.svgrepo.com/show/521128/email-1.svg" alt="Email Icon" style={{ width: 80, height: "auto" }} />
+              <p className="card-text" style={{ color: "var(--accent-a)" }}>sz@to.hkjc.uk</p>
+              <div style={{ position: "absolute", right: -5, top: 10, zIndex: -1, opacity: 0.85 }}>
+                <img src="https://www.svgrepo.com/show/521128/email-1.svg" alt="Email Icon" style={{ width: 100, height: "auto" }} />
               </div>
             </div>
+            <a
+              href="mailto:sz@to.hkjc.uk"
+              style={{ position: "absolute", inset: 0, zIndex: 2, cursor: "pointer" }}
+              aria-label="Send email"
+            />
           </Card>
 
-          <Card span={4} size="sm">
+          <Card span={4} size="sm" style={{ position: "relative" }}>
             <div style={{ position: "relative", zIndex: 1 }}>
               <h2 className="card-title">instagram</h2>
-              <a href="https://www.instagram.com/szto.hkjc.uk/" target="_blank" rel="noreferrer" className="card-text" style={{ color: "var(--accent-a)", textDecoration: "none" }}>
-                @szto.hkjc.uk
-              </a>
-              <div style={{ position: "absolute", right: -5, top: -5, zIndex: -1, opacity: 0.55 }}>
-                <img src="https://www.svgrepo.com/show/452229/instagram-1.svg" alt="Instagram Icon" style={{ width: 80, height: "auto" }} />
+              <p className="card-text" style={{ color: "var(--accent-a)" }}>@szto.hkjc.uk</p>
+              <div style={{ position: "absolute", right: -5, top: 10, zIndex: -1, opacity: 0.85 }}>
+                <img src="https://www.svgrepo.com/show/452229/instagram-1.svg" alt="Instagram Icon" style={{ width: 100, height: "auto" }} />
               </div>
             </div>
+            <a
+              href="https://www.instagram.com/szto.hkjc.uk/"
+              target="_blank"
+              rel="noreferrer"
+              style={{ position: "absolute", inset: 0, zIndex: 2, cursor: "pointer" }}
+              aria-label="Instagram profile"
+            />
           </Card>
 
           <Card span={6} size="sm">
@@ -111,11 +114,11 @@ export default function App() {
           </Card>
           <Card span={6} size="sm" style={{ transform: "rotate(1.2deg)" }} />
 
-          <Card span={12} size="sm" style={{ marginTop: 24, transform: "none" }}>
+          <Card id="steam" span={12} size="sm" style={{ marginTop: 24, transform: "none" }}>
             <SteamGames />
           </Card>
 
-          <Card span={12} size="sm" style={{ marginTop: 4, transform: "none" }}>
+          <Card id="weather" span={12} size="sm" style={{ marginTop: 4, transform: "none" }}>
             <Weather />
           </Card>
         </main>
@@ -123,6 +126,7 @@ export default function App() {
       </div>
     </>
       )}
+    </div>
     </>
   )
 }

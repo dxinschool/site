@@ -36,7 +36,7 @@ export default function Weather() {
                       borderRadius: 999,
                       background: s.bg || "var(--card)",
                       border: `1px solid ${s.border || "var(--border)"}`,
-                      fontSize: 13,
+                      fontSize: 22,
                       fontWeight: 600,
                       color: s.border || "var(--text)",
                     }}
@@ -64,7 +64,7 @@ export default function Weather() {
               <div style={{ fontSize: 36, fontWeight: 700, lineHeight: 1 }}>
                 {data.current.temp !== null ? `${data.current.temp}°` : "--°"}
               </div>
-              <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 2 }}>
+              <div style={{ fontSize: 22, color: "var(--muted)", marginTop: 2 }}>
                 humidity: {data.current.humidity !== null ? `${data.current.humidity}%` : "--"}
               </div>
             </div>
@@ -77,7 +77,7 @@ export default function Weather() {
                 borderRadius: 8,
                 background: "rgba(200, 50, 50, 0.08)",
                 border: "1px solid rgba(200, 50, 50, 0.3)",
-                fontSize: 13,
+                fontSize: 22,
                 color: "var(--text)",
                 marginBottom: 16,
                 lineHeight: 1.5,
@@ -106,11 +106,11 @@ export default function Weather() {
                   border: "1px solid var(--border)",
                 }}
               >
-                <div style={{ fontSize: 11, color: "var(--muted)", marginBottom: 4 }}>
+                <div style={{ fontSize: 22, color: "var(--muted)", marginBottom: 4 }}>
                   {i === 0 ? "Today" : day.day}
                 </div>
                 <div style={{ fontSize: 22, marginBottom: 2 }}>{day.emoji}</div>
-                <div style={{ fontSize: 12 }}>
+                <div style={{ fontSize: 22 }}>
                   <span style={{ fontWeight: 600 }}>{day.high !== null ? `${day.high}°` : "--"}</span>
                   <span style={{ color: "var(--muted)", marginLeft: 4 }}>{day.low !== null ? `${day.low}°` : "--"}</span>
                 </div>

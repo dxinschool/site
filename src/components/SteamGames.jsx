@@ -21,7 +21,7 @@ export default function SteamGames() {
           <p className="card-text" style={{ color: "var(--accent-c)" }}>
             couldn't load games
           </p>
-          <p className="card-text" style={{ fontSize: 12 }}>
+          <p className="card-text" style={{ fontSize: 22 }}>
             {error}
           </p>
         </>
@@ -66,7 +66,7 @@ export default function SteamGames() {
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div
                   style={{
-                    fontSize: 15,
+                    fontSize: 22,
                     fontWeight: 600,
                     color: "var(--text)",
                     whiteSpace: "nowrap",
@@ -76,7 +76,7 @@ export default function SteamGames() {
                 >
                   {game.name}
                 </div>
-                <div style={{ fontSize: 13, color: "var(--muted)" }}>
+                <div style={{ fontSize: 22, color: "var(--muted)" }}>
                   {game.playtime2Weeks > 0
                     ? `${formatTime(game.playtime2Weeks)} past 2 weeks`
                     : `${formatTime(game.playtimeForever)} total`}
