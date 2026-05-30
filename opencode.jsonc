@@ -1,0 +1,32 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "banana2556": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Banana2556",
+      "options": {
+        "baseURL": "https://api.banana2556.com/v1"
+      },
+      "models": {
+        "qwen/qwen3-coder-480b-a35b-instruct": {
+          "name": "Qwen 3 Coder 480B"
+        }
+      }
+    },
+    "banana": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Banana",
+      "options": {
+        "baseURL": "https://api.banana2556.com/v1"
+      },
+      "models": {
+        "gpt-5.5": {
+          "name": "GPT-5.5"
+        }
+      }
+    }
+  },
+  "plugin": [
+    "@mohak34/opencode-notifier@latest"
+  ]
+}

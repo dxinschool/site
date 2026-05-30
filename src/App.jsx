@@ -64,8 +64,8 @@ export default function App() {
             <div style={{ position: "relative", zIndex: 1 }}>
               <h2 className="card-title">discord</h2>
               <DiscordStatus />
-              <div style={{ position: "absolute", right: -5, top: 10, zIndex: -1, opacity: 0.85 }}>
-                <img src="https://www.svgrepo.com/show/353655/discord-icon.svg" alt="Discord Logo" style={{ width: 100, height: "auto" }} />
+              <div className="card-icon-wrap">
+                <img src="https://www.svgrepo.com/show/353655/discord-icon.svg" alt="Discord Logo" className="card-icon" />
               </div>
             </div>
             <a
@@ -81,8 +81,8 @@ export default function App() {
             <div style={{ position: "relative", zIndex: 1 }}>
               <h2 className="card-title">email</h2>
               <p className="card-text" style={{ color: "var(--accent-a)" }}>sz@to.hkjc.uk</p>
-              <div style={{ position: "absolute", right: -5, top: 10, zIndex: -1, opacity: 0.85 }}>
-                <img src="https://www.svgrepo.com/show/521128/email-1.svg" alt="Email Icon" style={{ width: 100, height: "auto" }} />
+              <div className="card-icon-wrap">
+                <img src="https://www.svgrepo.com/show/521128/email-1.svg" alt="Email Icon" className="card-icon" />
               </div>
             </div>
             <a
@@ -96,8 +96,8 @@ export default function App() {
             <div style={{ position: "relative", zIndex: 1 }}>
               <h2 className="card-title">instagram</h2>
               <p className="card-text" style={{ color: "var(--accent-a)" }}>@szto.hkjc.uk</p>
-              <div style={{ position: "absolute", right: -5, top: 10, zIndex: -1, opacity: 0.85 }}>
-                <img src="https://www.svgrepo.com/show/452229/instagram-1.svg" alt="Instagram Icon" style={{ width: 100, height: "auto" }} />
+              <div className="card-icon-wrap">
+                <img src="https://www.svgrepo.com/show/452229/instagram-1.svg" alt="Instagram Icon" className="card-icon" />
               </div>
             </div>
             <a

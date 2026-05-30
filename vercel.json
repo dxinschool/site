@@ -1,0 +1,16 @@
+{
+  "rewrites": [
+    {
+      "source": "/steam-api/(.*)",
+      "destination": "https://api.steampowered.com/$1"
+    },
+    {
+      "source": "/lrclib-api/(.*)",
+      "destination": "https://lrclib.net/$1"
+    },
+    {
+      "source": "/hko-api/(.*)",
+      "destination": "https://data.weather.gov.hk/$1"
+    }
+  ]
+}
