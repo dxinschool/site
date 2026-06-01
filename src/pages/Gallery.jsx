@@ -1,6 +1,6 @@
 import { useState, useMemo, useCallback, useEffect } from "react"
 
-const categories = ["random", "nature", "city", "people"]
+const categories = ["japan"]
 const rotations = [-2.5, 1.8, -1.2, 3, -0.5, 2.2, -3.5, 0.8, -1.8]
 
 async function loadAllMetadata() {
