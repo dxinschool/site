@@ -1048,19 +1048,26 @@ a {
 }
 
 .weather-forecast {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
   gap: 8px;
   margin-bottom: 12px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  padding-bottom: 4px;
 }
 
-.weather-day {
-  flex-shrink: 0;
-  scroll-snap-align: start;
-  width: 110px;
+@media (max-width: 800px) {
+  .weather-forecast {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+  }
+
+  .weather-day {
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    width: 110px;
+  }
 }
 
 @media (max-width: 640px) {
