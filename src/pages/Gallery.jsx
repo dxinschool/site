@@ -1,22 +1,25 @@
 import { useState, useMemo, useCallback, useEffect } from "react"
 
 const images = [
-  { id: 1, src: "https://picsum.photos/seed/cheki1/600/600", desc: "a random photo" },
-  { id: 2, src: "https://picsum.photos/seed/cheki2/600/600", desc: "another photo" },
-  { id: 3, src: "https://picsum.photos/seed/cheki3/600/600", desc: "some scenery" },
-  { id: 4, src: "https://picsum.photos/seed/cheki4/600/600", desc: "captured moment" },
-  { id: 5, src: "https://picsum.photos/seed/cheki5/600/600", desc: "nice view" },
-  { id: 6, src: "https://picsum.photos/seed/cheki6/600/600", desc: "cityscape" },
-  { id: 7, src: "https://picsum.photos/seed/cheki7/600/600", desc: "nature" },
-  { id: 8, src: "https://picsum.photos/seed/cheki8/600/600", desc: "architecture" },
-  { id: 9, src: "https://picsum.photos/seed/cheki9/600/600", desc: "portrait" },
+  { id: 1, src: "https://picsum.photos/seed/cheki1/600/600", desc: "a random photo", category: "random" },
+  { id: 2, src: "https://picsum.photos/seed/cheki2/600/600", desc: "another photo", category: "random" },
+  { id: 3, src: "https://picsum.photos/seed/cheki3/600/600", desc: "some scenery", category: "nature" },
+  { id: 4, src: "https://picsum.photos/seed/cheki4/600/600", desc: "captured moment", category: "random" },
+  { id: 5, src: "https://picsum.photos/seed/cheki5/600/600", desc: "nice view", category: "nature" },
+  { id: 6, src: "https://picsum.photos/seed/cheki6/600/600", desc: "cityscape", category: "city" },
+  { id: 7, src: "https://picsum.photos/seed/cheki7/600/600", desc: "nature", category: "nature" },
+  { id: 8, src: "https://picsum.photos/seed/cheki8/600/600", desc: "architecture", category: "city" },
+  { id: 9, src: "https://picsum.photos/seed/cheki9/600/600", desc: "portrait", category: "people" },
 ]
 
 const rotations = [-2.5, 1.8, -1.2, 3, -0.5, 2.2, -3.5, 0.8, -1.8]
 
+const allCategories = ["all", ...new Set(images.map((img) => img.category))]
+
 export default function Gallery() {
   const [selected, setSelected] = useState(null)
   const [closing, setClosing] = useState(false)
+  const [activeCategory, setActiveCategory] = useState("all")
 
   const open = useCallback((img) => setSelected(img), [])
 
@@ -33,14 +36,16 @@ export default function Gallery() {
     return () => clearTimeout(id)
   }, [closing])
 
-  const shuffled = useMemo(() => {
-    const arr = images.map((img, i) => ({ ...img, rotate: rotations[i % rotations.length] }))
+  const visible = useMemo(() => {
+    const arr = images
+      .filter((img) => activeCategory === "all" || img.category === activeCategory)
+      .map((img, i) => ({ ...img, rotate: rotations[i % rotations.length] }))
     for (let i = arr.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [arr[i], arr[j]] = [arr[j], arr[i]]
     }
     return arr
-  }, [])
+  }, [activeCategory])
 
   return (
     <div className="page">
@@ -54,8 +59,21 @@ export default function Gallery() {
         <h1 style={{ fontSize: 28, fontWeight: 700, marginBottom: 8 }}>gallery</h1>
         <p style={{ color: "var(--muted)", marginBottom: 32 }}>photos and captures</p>
 
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, justifyContent: "center", marginBottom: 24 }}>
+          {allCategories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className="gallery-cat-btn"
+              data-active={activeCategory === cat}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
         <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 16 }}>
-          {shuffled.map((img, i) => (
+          {visible.map((img, i) => (
             <div
               key={img.id}
               className="polaroid"

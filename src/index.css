@@ -784,6 +784,33 @@ a {
   }
 }
 
+/* ── Gallery Category Filters ── */
+
+.gallery-cat-btn {
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(47, 127, 176, 0.1);
+  color: var(--muted);
+  font-family: "VT323", monospace;
+  font-size: 20px;
+  cursor: pointer;
+  text-transform: lowercase;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.gallery-cat-btn:hover {
+  background: rgba(47, 127, 176, 0.2);
+  border-color: var(--accent-a);
+  transform: translateY(-1px);
+}
+
+.gallery-cat-btn[data-active="true"] {
+  background: var(--accent-a);
+  color: #fff;
+  border-color: var(--accent-a);
+}
+
 /* ── Polaroid Gallery ── */
 
 .polaroid {
