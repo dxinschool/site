@@ -1,15 +1,15 @@
 import { useState, useMemo, useCallback, useEffect } from "react"
 
 const images = [
-  { id: 1, src: "https://picsum.photos/seed/cheki1/600/600", desc: "a random photo", category: "random" },
-  { id: 2, src: "https://picsum.photos/seed/cheki2/600/600", desc: "another photo", category: "random" },
-  { id: 3, src: "https://picsum.photos/seed/cheki3/600/600", desc: "some scenery", category: "nature" },
-  { id: 4, src: "https://picsum.photos/seed/cheki4/600/600", desc: "captured moment", category: "random" },
-  { id: 5, src: "https://picsum.photos/seed/cheki5/600/600", desc: "nice view", category: "nature" },
-  { id: 6, src: "https://picsum.photos/seed/cheki6/600/600", desc: "cityscape", category: "city" },
-  { id: 7, src: "https://picsum.photos/seed/cheki7/600/600", desc: "nature", category: "nature" },
-  { id: 8, src: "https://picsum.photos/seed/cheki8/600/600", desc: "architecture", category: "city" },
-  { id: 9, src: "https://picsum.photos/seed/cheki9/600/600", desc: "portrait", category: "people" },
+  { id: 1, src: "/gallery/random/1.jpg", desc: "a random photo", category: "random" },
+  { id: 2, src: "/gallery/random/2.jpg", desc: "another photo", category: "random" },
+  { id: 3, src: "/gallery/nature/1.jpg", desc: "some scenery", category: "nature" },
+  { id: 4, src: "/gallery/random/3.jpg", desc: "captured moment", category: "random" },
+  { id: 5, src: "/gallery/nature/2.jpg", desc: "nice view", category: "nature" },
+  { id: 6, src: "/gallery/city/1.jpg", desc: "cityscape", category: "city" },
+  { id: 7, src: "/gallery/nature/3.jpg", desc: "nature", category: "nature" },
+  { id: 8, src: "/gallery/city/2.jpg", desc: "architecture", category: "city" },
+  { id: 9, src: "/gallery/people/1.jpg", desc: "portrait", category: "people" },
 ]
 
 const rotations = [-2.5, 1.8, -1.2, 3, -0.5, 2.2, -3.5, 0.8, -1.8]
