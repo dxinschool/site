@@ -1,25 +1,39 @@
 import { useState, useMemo, useCallback, useEffect } from "react"
 
-const images = [
-  { id: 1, src: "/gallery/random/1.jpg", desc: "a random photo", category: "random" },
-  { id: 2, src: "/gallery/random/2.jpg", desc: "another photo", category: "random" },
-  { id: 3, src: "/gallery/nature/1.jpg", desc: "some scenery", category: "nature" },
-  { id: 4, src: "/gallery/random/3.jpg", desc: "captured moment", category: "random" },
-  { id: 5, src: "/gallery/nature/2.jpg", desc: "nice view", category: "nature" },
-  { id: 6, src: "/gallery/city/1.jpg", desc: "cityscape", category: "city" },
-  { id: 7, src: "/gallery/nature/3.jpg", desc: "nature", category: "nature" },
-  { id: 8, src: "/gallery/city/2.jpg", desc: "architecture", category: "city" },
-  { id: 9, src: "/gallery/people/1.jpg", desc: "portrait", category: "people" },
-]
-
+const categories = ["random", "nature", "city", "people"]
 const rotations = [-2.5, 1.8, -1.2, 3, -0.5, 2.2, -3.5, 0.8, -1.8]
 
-const allCategories = ["all", ...new Set(images.map((img) => img.category))]
+async function loadAllMetadata() {
+  const entries = []
+  let id = 0
+  for (const cat of categories) {
+    try {
+      const res = await fetch(`/gallery/${cat}/metadata.json`)
+      if (!res.ok) continue
+      const map = await res.json()
+      for (const [file, desc] of Object.entries(map)) {
+        entries.push({ id: ++id, src: `/gallery/${cat}/${file}`, desc, category: cat })
+      }
+    } catch {
+      // skip missing metadata
+    }
+  }
+  return entries
+}
 
 export default function Gallery() {
+  const [allImages, setAllImages] = useState([])
   const [selected, setSelected] = useState(null)
   const [closing, setClosing] = useState(false)
   const [activeCategory, setActiveCategory] = useState("all")
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    loadAllMetadata().then((imgs) => {
+      setAllImages(imgs)
+      setLoading(false)
+    })
+  }, [])
 
   const open = useCallback((img) => setSelected(img), [])
 
@@ -37,7 +51,7 @@ export default function Gallery() {
   }, [closing])
 
   const visible = useMemo(() => {
-    const arr = images
+    const arr = allImages
       .filter((img) => activeCategory === "all" || img.category === activeCategory)
       .map((img, i) => ({ ...img, rotate: rotations[i % rotations.length] }))
     for (let i = arr.length - 1; i > 0; i--) {
@@ -45,7 +59,9 @@ export default function Gallery() {
       [arr[i], arr[j]] = [arr[j], arr[i]]
     }
     return arr
-  }, [activeCategory])
+  }, [allImages, activeCategory])
+
+  const catButtons = ["all", ...categories]
 
   return (
     <div className="page">
@@ -60,7 +76,7 @@ export default function Gallery() {
         <p style={{ color: "var(--muted)", marginBottom: 32 }}>photos and captures</p>
 
         <div style={{ display: "flex", flexWrap: "wrap", gap: 8, justifyContent: "center", marginBottom: 24 }}>
-          {allCategories.map((cat) => (
+          {catButtons.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
@@ -72,24 +88,28 @@ export default function Gallery() {
           ))}
         </div>
 
-        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 16 }}>
-          {visible.map((img, i) => (
-            <div
-              key={img.id}
-              className="polaroid"
-              onClick={() => open(img)}
-              style={{
-                "--rotate": `${img.rotate}deg`,
-                zIndex: i,
-              }}
-            >
-              <div className="polaroid-img-wrap">
-                <img src={img.src} alt={img.desc} />
+        {loading ? (
+          <p className="card-text" style={{ textAlign: "center" }}>loading gallery...</p>
+        ) : (
+          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 16 }}>
+            {visible.map((img, i) => (
+              <div
+                key={img.id}
+                className="polaroid"
+                onClick={() => open(img)}
+                style={{
+                  "--rotate": `${img.rotate}deg`,
+                  zIndex: i,
+                }}
+              >
+                <div className="polaroid-img-wrap">
+                  <img src={img.src} alt={img.desc} />
+                </div>
+                <div className="polaroid-caption">{img.desc}</div>
               </div>
-              <div className="polaroid-caption">{img.desc}</div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </main>
 
       {(selected || closing) && (
