@@ -1,14 +1,17 @@
+import { useLang } from "../LangContext"
+
 const posts = [
   { slug: "hello-world", title: "Hello World", date: "2026-05-29", excerpt: "First post!", tags: ["thoughts"] },
   { slug: "ctf-writeup", title: "CTF Writeup", date: "2026-05-28", excerpt: "Some CTF stuff...", tags: ["tech"] },
 ]
 
 export default function Blog() {
+  const { t } = useLang()
   return (
     <div className="page">
       <main className="blog-timeline">
-        <h1 className="blog-title">blog</h1>
-        <p className="blog-subtitle">thoughts and writeups</p>
+        <h1 className="blog-title">{t("blog.title")}</h1>
+        <p className="blog-subtitle">{t("blog.desc")}</p>
 
         <div className="timeline-line" />
 

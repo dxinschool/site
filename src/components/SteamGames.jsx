@@ -1,3 +1,4 @@
+import { useLang } from "../LangContext"
 import useSteamRecentlyPlayed from "../hooks/useSteamRecentlyPlayed"
 
 function formatTime(minutes) {
@@ -8,18 +9,19 @@ function formatTime(minutes) {
 }
 
 export default function SteamGames() {
+  const { t } = useLang()
   const { games, loading, error } = useSteamRecentlyPlayed()
 
   return (
     <>
-      <h2 className="card-title">steam</h2>
+      <h2 className="card-title">{t("steam.title")}</h2>
 
-      {loading && <p className="card-text">loading games...</p>}
+      {loading && <p className="card-text">{t("steam.loading")}</p>}
 
       {error && (
         <>
           <p className="card-text" style={{ color: "var(--accent-c)" }}>
-            couldn't load games
+            {t("steam.error")}
           </p>
           <p className="card-text" style={{ fontSize: 22 }}>
             {error}
@@ -28,7 +30,7 @@ export default function SteamGames() {
       )}
 
       {games && games.total === 0 && (
-        <p className="card-text">no recently played games</p>
+        <p className="card-text">{t("steam.empty")}</p>
       )}
 
       {games && games.total > 0 && (
@@ -78,8 +80,8 @@ export default function SteamGames() {
                 </div>
                 <div style={{ fontSize: 22, color: "var(--muted)" }}>
                   {game.playtime2Weeks > 0
-                    ? `${formatTime(game.playtime2Weeks)} past 2 weeks`
-                    : `${formatTime(game.playtimeForever)} total`}
+                    ? `${formatTime(game.playtime2Weeks)}${t("steam.past_2w")}`
+                    : `${formatTime(game.playtimeForever)}${t("steam.total")}`}
                 </div>
               </div>
             </a>

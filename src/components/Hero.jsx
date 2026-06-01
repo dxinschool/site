@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { useLang } from "../LangContext"
 import useLanyard from "../hooks/useLanyard"
 
 function HKTime() {
@@ -25,13 +26,6 @@ function HKTime() {
   return <>{time || ""}</>
 }
 
-const statusLabels = {
-  online: "online",
-  idle: "idle",
-  dnd: "do not disturb",
-  offline: "offline",
-}
-
 const statusHighlighter = {
   online: "highlighter-green",
   idle: "highlighter-yellow",
@@ -39,8 +33,16 @@ const statusHighlighter = {
   offline: "highlighter-grey",
 }
 
+const statusKey = {
+  online: "hero.status_online",
+  idle: "hero.status_idle",
+  dnd: "hero.status_dnd",
+  offline: "hero.status_offline",
+}
+
 export default function Hero({ setPage }) {
   const { discordAvatar, discordStatus } = useLanyard()
+  const { t } = useLang()
 
   return (
     <section className="hero-section">
@@ -50,25 +52,25 @@ export default function Hero({ setPage }) {
             <h1 className="hero-title">dxuwu</h1>
             <p className="hero-desc">
               <span className={statusHighlighter[discordStatus] || "highlighter-grey"}>
-                {statusLabels[discordStatus] || "offline"}
+                {t(statusKey[discordStatus] || "hero.status_offline")}
               </span>
-              {" · hello this is placeholder"}
+              {t("hero.desc")}
             </p>
             <div className="status-pills">
-              <span className="pill">Hong Kong</span>
-              <span className="pill">Japanese Learner</span>
-              <span className="pill"><HKTime /> <span style={{ opacity: 0.67 }}>GMT+8</span></span>
+              <span className="pill">{t("hero.pill_hk")}</span>
+              <span className="pill">{t("hero.pill_jp")}</span>
+              <span className="pill"><HKTime /> <span style={{ opacity: 0.67 }}>{t("hero.tz")}</span></span>
             </div>
           </div>
           <div className="hero-avatar">
-            <img src={discordAvatar} alt="avatar" />
+            <img src={discordAvatar} alt={t("hero.avatar_alt")} />
           </div>
         </div>
 
         <div className="nav-buttons">
-          <button onClick={() => setPage("home")} className="nav-button">home</button>
-          <button onClick={() => setPage("gallery")} className="nav-button">gallery</button>
-          <button onClick={() => setPage("blog")} className="nav-button">blog ✦</button>
+          <button onClick={() => setPage("home")} className="nav-button">{t("nav.home")}</button>
+          <button onClick={() => setPage("gallery")} className="nav-button">{t("nav.gallery")}</button>
+          <button onClick={() => setPage("blog")} className="nav-button">{t("nav.blog")} ✦</button>
         </div>
       </div>
     </section>

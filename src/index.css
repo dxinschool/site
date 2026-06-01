@@ -784,6 +784,48 @@ a {
   }
 }
 
+/* ── Language Switcher ── */
+
+.lang-switcher {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(47, 127, 176, 0.1);
+  cursor: pointer;
+  font-family: "Caveat", sans-serif;
+  font-size: 22px;
+  color: var(--muted);
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  line-height: 1;
+}
+
+.lang-switcher:hover {
+  background: rgba(47, 127, 176, 0.2);
+  border-color: var(--accent-a);
+}
+
+.lang-switcher span[data-active="true"] {
+  color: var(--accent-a);
+  font-weight: 700;
+}
+
+.lang-divider {
+  width: 1px;
+  height: 16px;
+  background: var(--border);
+  display: inline-block;
+}
+
+@media (max-width: 640px) {
+  .lang-switcher {
+    font-size: 20px;
+    padding: 3px 8px;
+  }
+}
+
 /* ── Gallery Category Filters ── */
 
 .gallery-cat-btn {

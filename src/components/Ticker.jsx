@@ -1,6 +1,9 @@
-const text = "mai go chu ♪ 迷子中 · lost in thought · "
+import { useLang } from "../LangContext"
 
 export default function Ticker() {
+  const { t } = useLang()
+  const text = t("ticker")
+
   return (
     <div className="ticker">
       <div className="ticker-track">

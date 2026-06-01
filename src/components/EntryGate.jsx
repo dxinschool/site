@@ -1,6 +1,8 @@
 import { useState } from "react"
+import { useLang } from "../LangContext"
 
 export default function EntryGate({ onEnter }) {
+  const { t } = useLang()
   const [leaving, setLeaving] = useState(false)
 
   function handleClick() {
@@ -42,7 +44,7 @@ export default function EntryGate({ onEnter }) {
             margin: "0 0 6px",
           }}
         >
-          enter site
+          {t("entry.title")}
         </h1>
         <p
           style={{
@@ -51,7 +53,7 @@ export default function EntryGate({ onEnter }) {
             margin: 0,
           }}
         >
-          click anywhere to unlock motion
+          {t("entry.hint")}
         </p>
       </div>
     </div>

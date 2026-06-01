@@ -1,11 +1,5 @@
+import { useLang } from "../LangContext"
 import useLanyard from "../hooks/useLanyard"
-
-const statusLabels = {
-  online: "online",
-  idle: "idle",
-  dnd: "do not disturb",
-  offline: "offline",
-}
 
 const statusHighlighter = {
   online: "highlighter-green",
@@ -14,14 +8,22 @@ const statusHighlighter = {
   offline: "highlighter-grey",
 }
 
+const statusKey = {
+  online: "hero.status_online",
+  idle: "hero.status_idle",
+  dnd: "hero.status_dnd",
+  offline: "hero.status_offline",
+}
+
 export default function DiscordStatus() {
+  const { t } = useLang()
   const { discordStatus } = useLanyard()
 
   return (
     <p className="card-text">
       DXuwu ·{" "}
       <span className={statusHighlighter[discordStatus] || "highlighter-grey"}>
-        {statusLabels[discordStatus] || "offline"}
+        {t(statusKey[discordStatus] || "hero.status_offline")}
       </span>
     </p>
   )

@@ -34,23 +34,22 @@ export default function useWeather() {
 
         const warnings = []
         if (warn.WTCS) {
-          const signal = tcSignals[warn.WTCS.code] || warn.WTCS.code
-          warnings.push({ type: "tropical-cyclone", label: `Typhoon Signal No. ${signal}`, code: signal })
+          warnings.push({ type: "tropical-cyclone", signal: tcSignals[warn.WTCS.code] || warn.WTCS.code })
         }
         if (warn.WRAIN) {
-          warnings.push({ type: "rainstorm", label: `${warn.WRAIN.type} Rainstorm Warning` })
+          warnings.push({ type: "rainstorm", rainType: warn.WRAIN.type })
         }
         if (warn.WHOT) {
-          warnings.push({ type: "hot-weather", label: "Very Hot Weather Warning" })
+          warnings.push({ type: "hot-weather" })
         }
         if (warn.WCOLD) {
-          warnings.push({ type: "cold-weather", label: "Cold Weather Warning" })
+          warnings.push({ type: "cold-weather" })
         }
         if (warn.WTS) {
-          warnings.push({ type: "thunderstorm", label: "Thunderstorm Warning" })
+          warnings.push({ type: "thunderstorm" })
         }
         if (warn.WFIRE) {
-          warnings.push({ type: "fire-danger", label: "Fire Danger Warning" })
+          warnings.push({ type: "fire-danger" })
         }
 
         setData({

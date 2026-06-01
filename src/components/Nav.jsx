@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useLang } from "../LangContext"
 
 const tabStyle = (isActive, hovered) => ({
   display: "flex",
@@ -33,6 +34,7 @@ const pages = [
 
 export default function Nav({ page, setPage }) {
   const [hovered, setHovered] = useState(null)
+  const { t } = useLang()
 
   return (
     <nav
@@ -55,7 +57,7 @@ export default function Nav({ page, setPage }) {
           onMouseEnter={() => setHovered(p.key)}
           onMouseLeave={() => setHovered(null)}
         >
-          {p.label}
+          {t(`nav.${p.key}`)}
         </button>
       ))}
     </nav>

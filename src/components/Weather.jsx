@@ -1,3 +1,4 @@
+import { useLang } from "../LangContext"
 import useWeather from "../hooks/useWeather"
 
 const warningStyles = {
@@ -10,14 +11,27 @@ const warningStyles = {
 }
 
 export default function Weather() {
+  const { t } = useLang()
   const { data, loading, error } = useWeather()
+
+  function warningLabel(w) {
+    switch (w.type) {
+      case "tropical-cyclone": return t("weather.warning_typhoon")(w.signal)
+      case "rainstorm": return t("weather.warning_rainstorm")(w.rainType)
+      case "hot-weather": return t("weather.warning_hot")
+      case "cold-weather": return t("weather.warning_cold")
+      case "thunderstorm": return t("weather.warning_thunder")
+      case "fire-danger": return t("weather.warning_fire")
+      default: return ""
+    }
+  }
 
   return (
     <>
-      <h2 className="card-title">weather · hong kong</h2>
+      <h2 className="card-title">{t("weather.title")}</h2>
 
-      {loading && <p className="card-text">loading...</p>}
-      {error && <p className="card-text" style={{ color: "var(--accent-c)" }}>couldn't load</p>}
+      {loading && <p className="card-text">{t("weather.loading")}</p>}
+      {error && <p className="card-text" style={{ color: "var(--accent-c)" }}>{t("weather.error")}</p>}
 
       {data && (
         <div>
@@ -42,7 +56,7 @@ export default function Weather() {
                     }}
                   >
                     <span>{s.icon || "⚠️"}</span>
-                    {w.label}
+                    {warningLabel(w)}
                   </div>
                 )
               })}
@@ -55,7 +69,7 @@ export default function Weather() {
             </span>
             <div>
               <div className="weather-current-temp">{data.current.temp !== null ? `${data.current.temp}°` : "--°"}</div>
-              <div className="weather-current-humidity">humidity: {data.current.humidity !== null ? `${data.current.humidity}%` : "--"}</div>
+              <div className="weather-current-humidity">{t("weather.humidity")}{data.current.humidity !== null ? `${data.current.humidity}%` : "--"}</div>
             </div>
           </div>
 
@@ -90,7 +104,7 @@ export default function Weather() {
                 }}
               >
                 <div style={{ fontSize: 22, color: "var(--muted)", marginBottom: 4 }}>
-                  {i === 0 ? "Today" : day.day}
+                  {i === 0 ? t("weather.today") : day.day}
                 </div>
                 <div style={{ fontSize: 22, marginBottom: 2 }}>{day.emoji}</div>
                 <div style={{ fontSize: 22 }}>

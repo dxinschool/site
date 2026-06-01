@@ -1,4 +1,5 @@
 import { useRef, useEffect } from "react"
+import { useLang } from "../LangContext"
 import useLanyard from "../hooks/useLanyard"
 import useLyrics from "../hooks/useLyrics"
 
@@ -29,6 +30,7 @@ function WordByWord({ text, progress }) {
 }
 
 export default function SpotifyNowPlaying() {
+  const { t } = useLang()
   const { spotify, loading, error } = useLanyard()
   const { lines, currentIndex, lineProgress, loading: lyricsLoading } = useLyrics(spotify)
   const scrollRef = useRef(null)
@@ -44,20 +46,20 @@ export default function SpotifyNowPlaying() {
 
   return (
     <>
-      <h2 className="card-title">spotify</h2>
+      <h2 className="card-title">{t("spotify.title")}</h2>
 
-      {loading && <p className="card-text">loading...</p>}
+      {loading && <p className="card-text">{t("spotify.loading")}</p>}
 
       {error && (
         <p className="card-text" style={{ color: "var(--accent-c)" }}>
-          couldn't load
+          {t("spotify.error")}
         </p>
       )}
 
       {!loading && !error && !spotify && (
         <>
-          <p className="card-text">not playing</p>
-          <p className="card-text">not listening right now</p>
+          <p className="card-text">{t("spotify.not_playing")}</p>
+          <p className="card-text">{t("spotify.not_listening")}</p>
         </>
       )}
 
@@ -95,7 +97,7 @@ export default function SpotifyNowPlaying() {
             {noLyrics && (
               <div className="spotify-nolyrics-info">
                 <div className="spotify-nolyrics-song">{spotify.song}</div>
-                <div className="spotify-nolyrics-artist">by {spotify.artist}</div>
+                <div className="spotify-nolyrics-artist">{t("spotify.by")}{spotify.artist}</div>
                 
                 <div className="spotify-nowplaying-tag">
                   <div className="spotify-bars">
@@ -103,7 +105,7 @@ export default function SpotifyNowPlaying() {
                     <span className="bar"></span>
                     <span className="bar"></span>
                   </div>
-                  now playing
+                  {t("spotify.now_playing")}
                 </div>
               </div>
             )}
@@ -125,7 +127,7 @@ export default function SpotifyNowPlaying() {
                     color: "var(--muted)",
                   }}
                 >
-                  fetching lyrics...
+                  {t("spotify.fetching")}
                 </div>
               ) : (
                 lines.map((line, i) => (

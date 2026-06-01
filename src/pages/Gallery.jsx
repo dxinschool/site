@@ -1,4 +1,5 @@
 import { useState, useMemo, useCallback, useEffect } from "react"
+import { useLang } from "../LangContext"
 
 const categories = ["japan"]
 const rotations = [-2.5, 1.8, -1.2, 3, -0.5, 2.2, -3.5, 0.8, -1.8]
@@ -22,6 +23,7 @@ async function loadAllMetadata() {
 }
 
 export default function Gallery() {
+  const { t } = useLang()
   const [allImages, setAllImages] = useState([])
   const [selected, setSelected] = useState(null)
   const [closing, setClosing] = useState(false)
@@ -72,8 +74,8 @@ export default function Gallery() {
           padding: "20px",
         }}
       >
-        <h1 style={{ fontSize: 28, fontWeight: 700, marginBottom: 8 }}>gallery</h1>
-        <p style={{ color: "var(--muted)", marginBottom: 32 }}>photos and captures</p>
+        <h1 style={{ fontSize: 28, fontWeight: 700, marginBottom: 8 }}>{t("gallery.title")}</h1>
+        <p style={{ color: "var(--muted)", marginBottom: 32 }}>{t("gallery.desc")}</p>
 
         <div style={{ display: "flex", flexWrap: "wrap", gap: 8, justifyContent: "center", marginBottom: 24 }}>
           {catButtons.map((cat) => (
@@ -83,13 +85,13 @@ export default function Gallery() {
               className="gallery-cat-btn"
               data-active={activeCategory === cat}
             >
-              {cat}
+              {cat === "all" ? t("gallery.all") : cat}
             </button>
           ))}
         </div>
 
         {loading ? (
-          <p className="card-text" style={{ textAlign: "center" }}>loading gallery...</p>
+          <p className="card-text" style={{ textAlign: "center" }}>{t("gallery.loading")}</p>
         ) : (
           <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 16 }}>
             {visible.map((img, i) => (
