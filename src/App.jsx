@@ -23,18 +23,14 @@ function AppContent() {
     <>
       {!entered && <EntryGate onEnter={() => setEntered(true)} />}
       {page !== "home" && <Nav page={page} setPage={setPage} />}
+      <div style={{ position: "fixed", top: 16, right: 24, zIndex: 200 }}><LanguageSwitcher /></div>
       <div key={page} className="page-fade">
-      {page === "blog" ? <><div style={{ position: "fixed", top: 16, right: 24, zIndex: 200 }}><LanguageSwitcher /></div><Blog /></>
-      : page === "gallery" ? <><div style={{ position: "fixed", top: 16, right: 24, zIndex: 200 }}><LanguageSwitcher /></div><Gallery /></>
+      {page === "blog" ? <Blog />
+      : page === "gallery" ? <Gallery />
       : (
       <>
         <div className="page">
-          <div style={{ position: "relative" }}>
-            <Hero setPage={setPage} />
-            <div style={{ position: "absolute", top: 8, right: 0 }}>
-              <LanguageSwitcher />
-            </div>
-          </div>
+          <Hero setPage={setPage} />
         <Ticker />
         <main className="grid">
           <Card span={7} size="xl">
