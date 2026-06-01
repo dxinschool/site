@@ -11,8 +11,8 @@ const warningStyles = {
 }
 
 export default function Weather() {
-  const { t } = useLang()
-  const { data, loading, error } = useWeather()
+  const { t, lang } = useLang()
+  const { data, loading, error } = useWeather(lang)
 
   function warningLabel(w) {
     switch (w.type) {

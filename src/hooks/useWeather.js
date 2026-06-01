@@ -11,10 +11,12 @@ const tcSignals = {
   TC9: "9", TC10: "10",
 }
 
-export default function useWeather() {
+export default function useWeather(lang = "en") {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+
+  const apiLang = lang === "zh" ? "zh" : "en"
 
   useEffect(() => {
     let cancelled = false
@@ -22,10 +24,10 @@ export default function useWeather() {
     async function fetchWeather() {
       try {
         const [rhr, warn, fnd, flw] = await Promise.all([
-          fetch("/hko-api/weatherAPI/opendata/weather.php?dataType=rhrread&lang=en").then(r => r.json()),
-          fetch("/hko-api/weatherAPI/opendata/weather.php?dataType=warnsum&lang=en").then(r => r.json()),
-          fetch("/hko-api/weatherAPI/opendata/weather.php?dataType=fnd&lang=en").then(r => r.json()),
-          fetch("/hko-api/weatherAPI/opendata/weather.php?dataType=flw&lang=en").then(r => r.json()),
+          fetch(`/hko-api/weatherAPI/opendata/weather.php?dataType=rhrread&lang=${apiLang}`).then(r => r.json()),
+          fetch(`/hko-api/weatherAPI/opendata/weather.php?dataType=warnsum&lang=${apiLang}`).then(r => r.json()),
+          fetch(`/hko-api/weatherAPI/opendata/weather.php?dataType=fnd&lang=${apiLang}`).then(r => r.json()),
+          fetch(`/hko-api/weatherAPI/opendata/weather.php?dataType=flw&lang=${apiLang}`).then(r => r.json()),
         ])
         if (cancelled) return
 
@@ -84,7 +86,7 @@ export default function useWeather() {
       cancelled = true
       clearInterval(id)
     }
-  }, [])
+  }, [apiLang])
 
   return { data, loading, error }
 }
