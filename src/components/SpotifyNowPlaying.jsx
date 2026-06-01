@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react"
+import { useRef, useEffect, useState } from "react"
 import { useLang } from "../LangContext"
 import useLanyard from "../hooks/useLanyard"
 import useLyrics from "../hooks/useLyrics"
@@ -35,6 +35,20 @@ export default function SpotifyNowPlaying() {
   const { lines, currentIndex, lineProgress, loading: lyricsLoading } = useLyrics(spotify)
   const scrollRef = useRef(null)
 
+  const [phase, setPhase] = useState("init")
+
+  useEffect(() => {
+    if (phase === "init") {
+      const a = requestAnimationFrame(() => {
+        const b = requestAnimationFrame(() => {
+          setPhase("ready")
+        })
+        return () => cancelAnimationFrame(b)
+      })
+      return () => cancelAnimationFrame(a)
+    }
+  }, [phase])
+
   useEffect(() => {
     const c = scrollRef.current
     if (!c || currentIndex < 0) return
@@ -43,6 +57,10 @@ export default function SpotifyNowPlaying() {
     const top = el.offsetTop - c.clientHeight / 2 + el.clientHeight / 2
     c.scrollTo({ top, behavior: "smooth" })
   }, [currentIndex])
+
+  const noLyrics = !lyricsLoading && lines.length === 0
+  const hasLyrics = lines.length > 0
+  const showCentered = phase === "init" || !hasLyrics || noLyrics
 
   return (
     <>
@@ -63,43 +81,27 @@ export default function SpotifyNowPlaying() {
         </>
       )}
 
-      {spotify && (() => {
-        const noLyrics = !lyricsLoading && lines.length === 0
-        return (
-          <div className={`spotify-row ${noLyrics ? "spotify-row--nolyrics" : ""}`}>
-            <div className="spotify-album-col">
-              <a
-                href={`https://open.spotify.com/track/${spotify.track_id}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="spotify-album-link"
-                style={{
-                  boxShadow: noLyrics ? "0 8px 24px rgba(0,0,0,0.15)" : "none",
-                }}
-              >
-                <img
-                  src={spotify.album_art_url}
-                  alt={spotify.album}
-                  className="spotify-album-img"
-                  width={noLyrics ? 110 : 140}
-                  height={noLyrics ? 110 : 140}
-                />
-              </a>
-              
-              {!noLyrics && (
-                <div className="spotify-song-info">
-                  <div className="spotify-song-title">{spotify.song}</div>
-                  <div className="spotify-song-artist">{spotify.artist}</div>
-                </div>
-              )}
-            </div>
+      {spotify && (
+        <div className={`spotify-wrap ${showCentered ? "spotify-wrap--center" : "spotify-wrap--split"}`}>
+          <div className="spotify-art">
+            <a
+              href={`https://open.spotify.com/track/${spotify.track_id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="spotify-art-link"
+            >
+              <img
+                src={spotify.album_art_url}
+                alt={spotify.album}
+                className="spotify-art-img"
+              />
+            </a>
 
-            {noLyrics && (
-              <div className="spotify-nolyrics-info">
-                <div className="spotify-nolyrics-song">{spotify.song}</div>
-                <div className="spotify-nolyrics-artist">{t("spotify.by")}{spotify.artist}</div>
-                
-                <div className="spotify-nowplaying-tag">
+            <div className="spotify-art-info">
+              <div className="spotify-art-song">{spotify.song}</div>
+              <div className="spotify-art-artist">{t("spotify.by")}{spotify.artist}</div>
+              {noLyrics ? (
+                <div className="spotify-nowplaying-tag" style={{ justifyContent: "center" }}>
                   <div className="spotify-bars">
                     <span className="bar"></span>
                     <span className="bar"></span>
@@ -107,68 +109,53 @@ export default function SpotifyNowPlaying() {
                   </div>
                   {t("spotify.now_playing")}
                 </div>
-              </div>
-            )}
-
-            {(lyricsLoading || lines.length > 0) && (
-            <div
-              ref={scrollRef}
-              className="spotify-lyrics"
-            >
-              {lyricsLoading ? (
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    height: "100%",
-                    minHeight: 60,
-                    fontSize: 22,
-                    color: "var(--muted)",
-                  }}
-                >
+              ) : !hasLyrics ? (
+                <div style={{ fontSize: 22, color: "var(--muted)", marginTop: 8, textAlign: "center" }}>
                   {t("spotify.fetching")}
                 </div>
-              ) : (
-                lines.map((line, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      fontSize: 23,
-                      lineHeight: 1.6,
-                      color:
-                        i === currentIndex
-                          ? "var(--accent-a)"
-                          : i < currentIndex
-                            ? "var(--muted)"
-                            : "var(--text)",
-                      fontWeight: i === currentIndex ? 600 : 400,
-                      opacity:
-                        i === currentIndex
-                          ? 1
-                          : Math.abs(i - currentIndex) <= 2
-                            ? 0.85
-                            : 0.4,
-                      transition: "color 0.12s, opacity 0.12s",
-                      padding: "1px 0",
-                    }}
-                  >
-                    {i === currentIndex && line.text ? (
-                      <WordByWord
-                        text={line.text}
-                        progress={Math.max(0, lineProgress)}
-                      />
-                    ) : (
-                      line.text || "\u00A0"
-                    )}
-                  </div>
-                ))
-              )}
+              ) : null}
+            </div>
+          </div>
+
+          {hasLyrics && (
+            <div ref={scrollRef} className="spotify-lyrics-panel">
+              {lines.map((line, i) => (
+                <div
+                  key={i}
+                  style={{
+                    fontSize: 23,
+                    lineHeight: 1.6,
+                    color:
+                      i === currentIndex
+                        ? "var(--accent-a)"
+                        : i < currentIndex
+                          ? "var(--muted)"
+                          : "var(--text)",
+                    fontWeight: i === currentIndex ? 600 : 400,
+                    opacity:
+                      i === currentIndex
+                        ? 1
+                        : Math.abs(i - currentIndex) <= 2
+                          ? 0.85
+                          : 0.4,
+                    transition: "color 0.12s, opacity 0.12s",
+                    padding: "1px 0",
+                  }}
+                >
+                  {i === currentIndex && line.text ? (
+                    <WordByWord
+                      text={line.text}
+                      progress={Math.max(0, lineProgress)}
+                    />
+                  ) : (
+                    line.text || "\u00A0"
+                  )}
+                </div>
+              ))}
             </div>
           )}
         </div>
-      )
-      })()}
+      )}
     </>
   )
 }

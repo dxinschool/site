@@ -16,7 +16,7 @@ export default function useWeather(lang = "en") {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  const apiLang = lang === "zh" ? "zh" : "en"
+  const apiLang = lang === "zh" ? "tc" : "en"
 
   useEffect(() => {
     let cancelled = false
@@ -31,7 +31,7 @@ export default function useWeather(lang = "en") {
         ])
         if (cancelled) return
 
-        const obs = rhr.temperature?.data?.find(s => s.place === "Hong Kong Observatory")
+        const obs = rhr.temperature?.data?.find(s => s.place === "Hong Kong Observatory" || s.place === "香港天文台")
         const hum = rhr.humidity?.data?.[0]
 
         const warnings = []

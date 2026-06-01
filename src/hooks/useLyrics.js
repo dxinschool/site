@@ -1,6 +1,27 @@
 import { useState, useEffect, useRef } from "react"
 
 const lyricsCache = new Map()
+const CACHE_KEY = "lyrics_cache_v1"
+
+function loadCache() {
+  try {
+    const raw = localStorage.getItem(CACHE_KEY)
+    if (raw) {
+      const parsed = JSON.parse(raw)
+      for (const [k, v] of Object.entries(parsed)) {
+        lyricsCache.set(k, v)
+      }
+    }
+  } catch {}
+}
+loadCache()
+
+function persistCache() {
+  try {
+    const obj = Object.fromEntries(lyricsCache)
+    localStorage.setItem(CACHE_KEY, JSON.stringify(obj))
+  } catch {}
+}
 
 function parseSynced(raw) {
   const regex = /\[(\d+):(\d+)\.(\d+)\]\s*(.*)/g
@@ -51,6 +72,7 @@ export default function useLyrics(spotify) {
       return
     }
 
+    setLines([])
     let cancelled = false
 
     async function fetchLyrics() {
@@ -71,6 +93,7 @@ export default function useLyrics(spotify) {
         if (parsed.length === 0) throw new Error("empty lyrics")
 
         lyricsCache.set(spotify.track_id, parsed)
+        persistCache()
         setLines(parsed)
         startRef.current = spotify.timestamps?.start ?? Date.now()
         songDurationRef.current = spotify.timestamps?.end
