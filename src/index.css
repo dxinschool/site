@@ -922,29 +922,26 @@ a {
 /* ── Spotify Responsive ── */
 
 .spotify-wrap {
-  position: relative;
-  min-height: 180px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.spotify-wrap--center {
+  justify-content: center;
+}
+
+.spotify-wrap--split {
+  justify-content: flex-start;
 }
 
 .spotify-art {
-  position: absolute;
-  top: 0;
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
   width: 140px;
-  transition: left 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.spotify-wrap--center .spotify-art {
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.spotify-wrap--split .spotify-art {
-  left: 0;
-  transform: translateX(0);
 }
 
 .spotify-art-link {
@@ -985,10 +982,8 @@ a {
 }
 
 .spotify-lyrics-panel {
-  position: absolute;
-  top: 0;
-  left: 156px;
-  right: 0;
+  flex: 1;
+  min-width: 0;
   height: 148px;
   overflow-y: scroll;
   scroll-behavior: smooth;
@@ -997,13 +992,11 @@ a {
 }
 
 .spotify-wrap--center .spotify-lyrics-panel {
-  opacity: 0;
-  pointer-events: none;
+  display: none;
 }
 
 .spotify-wrap--split .spotify-lyrics-panel {
-  opacity: 1;
-  pointer-events: auto;
+  display: block;
 }
 
 .spotify-nowplaying-tag {
@@ -1034,7 +1027,13 @@ a {
 }
 
 @media (max-width: 640px) {
+  .spotify-wrap--split {
+    flex-direction: column;
+    align-items: center;
+  }
+
   .spotify-lyrics-panel {
+    width: 100%;
     height: 120px;
   }
 
