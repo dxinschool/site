@@ -132,8 +132,8 @@ export default function SpotifyNowPlaying() {
                   <div
                     key={i}
                     style={{
-                      fontSize: 22,
-                      lineHeight: 1.7,
+                      fontSize: 23,
+                      lineHeight: 1.6,
                       color:
                         i === currentIndex
                           ? "var(--accent-a)"

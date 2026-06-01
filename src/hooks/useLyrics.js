@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from "react"
 
+const lyricsCache = new Map()
+
 function parseSynced(raw) {
   const regex = /\[(\d+):(\d+)\.(\d+)\]\s*(.*)/g
   const lines = []
@@ -38,6 +40,17 @@ export default function useLyrics(spotify) {
       return
     }
 
+    const cached = lyricsCache.get(spotify.track_id)
+    if (cached) {
+      setLines(cached)
+      setLoading(false)
+      startRef.current = spotify.timestamps?.start ?? Date.now()
+      songDurationRef.current = spotify.timestamps?.end
+        ? spotify.timestamps.end - spotify.timestamps.start
+        : 300000
+      return
+    }
+
     let cancelled = false
 
     async function fetchLyrics() {
@@ -57,6 +70,7 @@ export default function useLyrics(spotify) {
         const parsed = parseSynced(best.syncedLyrics)
         if (parsed.length === 0) throw new Error("empty lyrics")
 
+        lyricsCache.set(spotify.track_id, parsed)
         setLines(parsed)
         startRef.current = spotify.timestamps?.start ?? Date.now()
         songDurationRef.current = spotify.timestamps?.end
