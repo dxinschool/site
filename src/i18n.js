@@ -59,7 +59,6 @@ export const en = {
   blog: {
     title: "blog",
     desc: "thoughts and writeups",
-    all: "all",
     loading: "loading blog...",
     empty: "no posts yet",
     cat: {
@@ -131,7 +130,6 @@ export const zh = {
   blog: {
     title: "網誌",
     desc: "想法與文章",
-    all: "全部",
     loading: "正在載入網誌...",
     empty: "暫無文章",
     cat: {

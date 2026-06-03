@@ -24,7 +24,7 @@ async function loadAllMetadata() {
 export default function Blog() {
   const { t } = useLang()
   const [allPosts, setAllPosts] = useState([])
-  const [activeCategory, setActiveCategory] = useState("all")
+  const [activeCategory, setActiveCategory] = useState("blog")
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -36,11 +36,11 @@ export default function Blog() {
 
   const visible = useMemo(() => {
     return allPosts
-      .filter((p) => activeCategory === "all" || p.category === activeCategory)
+      .filter((p) => p.category === activeCategory)
       .sort((a, b) => b.date.localeCompare(a.date))
   }, [allPosts, activeCategory])
 
-  const catButtons = ["all", ...categories]
+  const catButtons = categories
 
   return (
     <div className="page">
@@ -49,14 +49,14 @@ export default function Blog() {
         <p className="blog-subtitle">{t("blog.desc")}</p>
 
         <div style={{ display: "flex", flexWrap: "wrap", gap: 8, justifyContent: "center", marginBottom: 24 }}>
-          {catButtons.map((cat) => (
+            {catButtons.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
               className="gallery-cat-btn"
               data-active={activeCategory === cat}
             >
-              {cat === "all" ? t("blog.all") : t(`blog.cat.${cat}`)}
+              {t(`blog.cat.${cat}`)}
             </button>
           ))}
         </div>
