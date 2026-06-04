@@ -11,6 +11,7 @@ import SteamGames from "./components/SteamGames"
 import SpotifyNowPlaying from "./components/SpotifyNowPlaying"
 import DiscordStatus from "./components/DiscordStatus"
 import Weather from "./components/Weather"
+import Guestbook from "./components/Guestbook"
 import Blog from "./pages/Blog"
 import Gallery from "./pages/Gallery"
 
@@ -122,6 +123,10 @@ function AppContent() {
 
           <Card id="weather" span={12} size="sm" style={{ marginTop: 4, transform: "none" }}>
             <Weather />
+          </Card>
+
+          <Card span={12} size="sm" style={{ marginTop: 24, transform: "none" }}>
+            <Guestbook />
           </Card>
         </main>
         <Footer />

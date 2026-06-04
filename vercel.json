@@ -11,6 +11,10 @@
     {
       "source": "/hko-api/(.*)",
       "destination": "https://data.weather.gov.hk/$1"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
     }
   ]
 }
