@@ -36,14 +36,13 @@ export async function GET(request) {
     avatar: user.avatar_url,
   })
 
-  const response = Response.redirect(`${origin}/`, 302)
-
   const cookie = encodeURIComponent(session)
 
-  response.headers.append(
-    "Set-Cookie",
-    `gb_session=${cookie}; Path=/; HttpOnly; SameSite=Lax; Max-Age=2592000`
-  )
-
-  return response
+  return new Response(null, {
+    status: 302,
+    headers: {
+      Location: `${origin}/`,
+      "Set-Cookie": `gb_session=${cookie}; Path=/; HttpOnly; SameSite=Lax; Max-Age=2592000`,
+    },
+  })
 }
