@@ -1,7 +1,7 @@
 import redis from "../lib/redis.js"
 
-export async function DELETE(request, { params }) {
-  const { id } = await params
+export async function DELETE(request) {
+  const id = new URL(request.url).pathname.split("/").pop()
 
   const cookie = request.headers.get("cookie") || ""
   const match = cookie.match(/gb_session=([^;]+)/)
