@@ -6,10 +6,7 @@ export async function GET() {
     if (!entries || !Array.isArray(entries)) {
       return Response.json([])
     }
-    const parsed = entries
-      .map((e) => { try { return JSON.parse(e) } catch { return null } })
-      .filter(Boolean)
-      .reverse()
+    const parsed = [...entries].reverse()
     return Response.json(parsed)
   } catch (err) {
     console.error("guestbook GET error:", err)

@@ -23,9 +23,7 @@ export async function DELETE(request) {
       return Response.json({ error: "No entries" }, { status: 404 })
     }
 
-    const entry = entries
-      .map((e) => { try { return JSON.parse(e) } catch { return null } })
-      .find((e) => e && e.id === id)
+    const entry = entries.find((e) => e && e.id === id)
 
     if (!entry) {
       return Response.json({ error: "Not found" }, { status: 404 })
