@@ -12,6 +12,7 @@ export default function useLanyard() {
   const [spotify, setSpotify] = useState(null)
   const [discordUser, setDiscordUser] = useState(null)
   const [discordStatus, setDiscordStatus] = useState("offline")
+  const [activities, setActivities] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
@@ -30,6 +31,7 @@ export default function useLanyard() {
         setSpotify(data?.spotify ?? null)
         setDiscordUser(data?.discord_user ?? null)
         setDiscordStatus(data?.discord_status ?? "offline")
+        setActivities(data?.activities ?? [])
       } catch (err) {
         if (!cancelled) setError(err.message)
       } finally {
@@ -50,6 +52,7 @@ export default function useLanyard() {
     discordUser,
     discordStatus,
     discordAvatar: discordUser ? avatarUrl(discordUser) : null,
+    activities,
     loading,
     error,
   }

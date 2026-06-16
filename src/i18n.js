@@ -15,6 +15,7 @@ export const en = {
   about: { title: "about me", desc: "Hi I love playing games, watching movies and stuff.", stat1: "BanGDreamer", stat2: "HKCERT CTF 2025 Gold Award", stat3: "Doomscroller" },
   now: { title: "now", item1: "CTF Learner", item2: "Sleep Lover", item3: "Gamer", item4: "Student" },
   discord: { title: "discord", img_alt: "Discord Logo", aria: "Discord profile" },
+  rpc: { title: "rpc", loading: "loading...", none: "no activity" },
   email: { title: "email", img_alt: "Email Icon", aria: "Send email" },
   instagram: { title: "instagram", img_alt: "Instagram Icon", aria: "Instagram profile" },
   spotify: {
@@ -95,6 +96,7 @@ export const zh = {
   about: { title: "關於我", desc: "嗨我喜歡打遊戲、看電影之類的", stat1: "BanGDreamer", stat2: "HKCERT CTF 2025 金獎", stat3: "Doomscroller" },
   now: { title: "現在", item1: "CTF 學習中", item2: "睡眠愛好者", item3: "玩家", item4: "學生" },
   discord: { title: "discord", img_alt: "Discord 標誌", aria: "Discord 個人檔案" },
+  rpc: { title: "活動", loading: "載入中...", none: "無活動" },
   email: { title: "電郵", img_alt: "電郵圖示", aria: "發送電郵" },
   instagram: { title: "instagram", img_alt: "Instagram 圖示", aria: "Instagram 個人檔案" },
   spotify: {

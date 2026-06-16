@@ -9,6 +9,7 @@ import Card from "./components/Card"
 import Footer from "./components/Footer"
 import SteamGames from "./components/SteamGames"
 import SpotifyNowPlaying from "./components/SpotifyNowPlaying"
+import DiscordRPC from "./components/DiscordRPC"
 import DiscordStatus from "./components/DiscordStatus"
 import Weather from "./components/Weather"
 import Guestbook from "./components/Guestbook"
@@ -115,7 +116,9 @@ function AppContent() {
           <Card id="spotify" span={6} size="sm" style={{ overflowAnchor: "none", minHeight: 240 }}>
             <SpotifyNowPlaying />
           </Card>
-          <Card span={6} size="sm" style={{ transform: "rotate(1.2deg)" }} />
+          <Card id="rpc" span={6} size="sm" style={{ transform: "rotate(1.2deg)" }}>
+            <DiscordRPC />
+          </Card>
 
           <Card id="steam" span={12} size="sm" style={{ marginTop: 24, transform: "none" }}>
             <SteamGames />

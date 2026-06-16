@@ -1271,3 +1271,80 @@ a {
   margin: 0;
   word-break: break-word;
 }
+
+/* ── Discord RPC ── */
+
+.rpc-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.rpc-art {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.rpc-art-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.rpc-body {
+  flex: 1;
+  min-width: 0;
+  line-height: 1.3;
+}
+
+.rpc-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rpc-details {
+  font-size: 16px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rpc-state {
+  font-size: 16px;
+  color: var(--muted);
+  opacity: 0.85;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rpc-elapsed {
+  font-family: "VT323", monospace;
+  font-size: 15px;
+  color: var(--accent-b);
+  margin-top: 4px;
+}
+
+@media (max-width: 640px) {
+  .rpc-art {
+    width: 48px;
+    height: 48px;
+  }
+  .rpc-name {
+    font-size: 16px;
+  }
+  .rpc-details,
+  .rpc-state {
+    font-size: 14px;
+  }
+}
