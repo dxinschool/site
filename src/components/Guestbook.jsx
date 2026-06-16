@@ -22,10 +22,10 @@ export default function Guestbook() {
 
   useEffect(() => {
     Promise.all([
-      fetch("/api/guestbook").then((r) => r.json()),
+      fetch("/api/guestbook").then((r) => r.ok ? r.json() : []),
       fetch("/api/auth/me").then((r) => r.json()),
     ]).then(([entries, { user }]) => {
-      setEntries(entries)
+      if (Array.isArray(entries)) setEntries(entries)
       setUser(user)
       setLoading(false)
     })
