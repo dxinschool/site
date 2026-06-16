@@ -3,10 +3,17 @@ import redis from "../lib/redis.js"
 export async function GET() {
   try {
     const entries = await redis.lrange("guestbook", 0, -1)
-    const parsed = entries.map((e) => JSON.parse(e)).reverse()
+    if (!entries || !Array.isArray(entries)) {
+      return Response.json([])
+    }
+    const parsed = entries
+      .map((e) => { try { return JSON.parse(e) } catch { return null } })
+      .filter(Boolean)
+      .reverse()
     return Response.json(parsed)
-  } catch {
-    return Response.json([], { status: 500 })
+  } catch (err) {
+    console.error("guestbook GET error:", err)
+    return Response.json({ error: "Failed to load entries" }, { status: 500 })
   }
 }
 
